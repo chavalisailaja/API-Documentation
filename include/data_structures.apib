@@ -1,0 +1,27 @@
+# Data Structures
+
+## GuideInfo
++ id: 0 (number, required) - Guide internal identification
++ title: Example Guide (string, required) - User defined guide title
++ featured_image: http://foo.bar/image.jpg (string, required) - Image to use as background for the guide title
++ creation: `Thu, 1 Jan 1970 00:00:00 -0000` (string, optional) - Datetime of the guide creation
++ last_edited: `Thu, 1 Jan 1970 00:00:00 -0000` (string, optional) - Datetime of the latest edition of the guide
++ visibility: false (boolean, optional) - Indicate whether the guide is publicly visible or not
++ photos (PhotoArray) - Array of photograph
+
+## GuideInfoArray (array)
++ (GuideInfo)
+
+## PhotoOrigin (enum[string])
++ Flickr
+
+## Photo
++ id: 0 (number, required) - Photo interal identification
++ origin: `Flickr` (PhotoOrigin, required) - Origin of the photograph
++ title: Example Photo (string, required) - Title given by the original author to the photograph
+
+## PhotoArray (array)
++ (Photo)
+
+## FlickrInfo
++ id: 0123456 (string, required) - ID given by flickr to the photo
