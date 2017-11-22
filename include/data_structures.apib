@@ -1,5 +1,9 @@
 # Data Structures
 
+##Location
++ lattitude: `-17.685895` (string)
++ longitude: `-63.36914` (string)
+
 ##UserInfo
 + id: 0 (number) - User internal identification
 + username: `johndoe` (string) - Username used to login on the platform, also used as a fallback when fullname isn't provided
@@ -11,22 +15,26 @@
 + username: johndoe (string) - Username used to login on the platform, also used as a fallback when fullname isn't provided
 + fullname: `John Doe` (string) - User's fullname
 
-## GuideInfoShort
+##GuideShortInfo
 + id: 0 (number) - Guide internal identification
 + title: Example Guide (string) - User defined guide title
 + featured_image: http://foo.bar/image.jpg (string) - Image to use as background for the guide title
 + owner: johndoe (string) - Username of the guide owner
 
-## GuideInfo
+## GuideShortInfoArray (array)
++ (GuideShortInfo)
+
+##GuideInfo
 + id: 0 (number) - Guide internal identification
 + title: Example Guide (string) - User defined guide title
 + featured_image: http://foo.bar/image.jpg (string) - Image to use as background for the guide title
 + creation: `Thu, 1 Jan 1970 00:00:00 -0000` (string) - Datetime of the guide creation
 + last_edited: `Thu, 1 Jan 1970 00:00:00 -0000` (string) - Datetime of the latest edition of the guide
 + visibility: false (boolean) - Indicate whether the guide is publicly visible or not
-+ photos (PhotoArray) - Array of photograph
++ number_photo: 42 (number) - The number of photos currently in the guide
++ location (Location) - Location of the guide, fields are empty if no location can be retrieved from the photos
 
-## GuideInfoArray (array)
+##GuideInfoArray (array)
 + (GuideInfo)
 
 ## Photo
