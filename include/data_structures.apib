@@ -1,27 +1,48 @@
 # Data Structures
 
-## GuideInfo
-+ id: 0 (number, required) - Guide internal identification
-+ title: Example Guide (string, required) - User defined guide title
-+ featured_image: http://foo.bar/image.jpg (string, required) - Image to use as background for the guide title
-+ creation: `Thu, 1 Jan 1970 00:00:00 -0000` (string, optional) - Datetime of the guide creation
-+ last_edited: `Thu, 1 Jan 1970 00:00:00 -0000` (string, optional) - Datetime of the latest edition of the guide
-+ visibility: false (boolean, optional) - Indicate whether the guide is publicly visible or not
-+ photos (PhotoArray) - Array of photograph
+##Location
++ lattitude: `-17.685895` (string)
++ longitude: `-63.36914` (string)
 
-## GuideInfoArray (array)
+##UserInfo
++ id: 0 (number) - User internal identification
++ username: `johndoe` (string) - Username used to login on the platform, also used as a fallback when fullname isn't provided
++ fullname: `John Doe` (string) - User's fullname
++ email: `johndoe@foo.bar`(string) - User's email, not public
+
+##UserShort
++ id: 0 (number) - User internal identification
++ username: johndoe (string) - Username used to login on the platform, also used as a fallback when fullname isn't provided
++ fullname: `John Doe` (string) - User's fullname
+
+##GuideShortInfo
++ id: 0 (number) - Guide internal identification
++ title: Example Guide (string) - User defined guide title
++ featured_image: http://foo.bar/image.jpg (string) - Image to use as background for the guide title
++ owner: johndoe (string) - Username of the guide owner
+
+## GuideShortInfoArray (array)
++ (GuideShortInfo)
+
+##GuideInfo
++ id: 0 (number) - Guide internal identification
++ title: Example Guide (string) - User defined guide title
++ featured_image: http://foo.bar/image.jpg (string) - Image to use as background for the guide title
++ creation: `Thu, 1 Jan 1970 00:00:00 -0000` (string) - Datetime of the guide creation
++ last_edited: `Thu, 1 Jan 1970 00:00:00 -0000` (string) - Datetime of the latest edition of the guide
++ visibility: false (boolean) - Indicate whether the guide is publicly visible or not
++ number_photo: 42 (number) - The number of photos currently in the guide
++ location (Location) - Location of the guide, fields are empty if no location can be retrieved from the photos
+
+##GuideInfoArray (array)
 + (GuideInfo)
-
-## PhotoOrigin (enum[string])
-+ Flickr
 
 ## Photo
 + id: 0 (number, required) - Photo interal identification
-+ origin: `Flickr` (PhotoOrigin, required) - Origin of the photograph
-+ title: Example Photo (string, required) - Title given by the original author to the photograph
++ origin: `Flickr` (string, required) - Origin of the photograph
++ title: Example Photo (string, required) - Title given by the original author to the photo
++ flickr_id: 0123456 (string, required) - ID given by flickr to the photo
++ url: http://foo.bar/image.jpg (string) - Photo final url
 
 ## PhotoArray (array)
 + (Photo)
-
-## FlickrInfo
-+ id: 0123456 (string, required) - ID given by flickr to the photo

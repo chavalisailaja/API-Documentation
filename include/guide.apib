@@ -1,0 +1,205 @@
+# Group Guide
+
+## Public guides listing [/public/guides{?page,per_page}]
+
++ Parameters
+
+    + page: `2` (optional, integer)
+        + Default: `1`
+    + per_page: `20` (optional, integer) - Number of guides to return.
+        + Default: `10`
+
+### Get a list of public guides [GET]
+::: note
+#### <i class="fa fa-key"></i> This entrypoint does not require authentication
+:::
+Return a defined number of public guides' short info. The number is defined by the `per_page` arguments. User can request other pages using the `page` arguments.
+
+Users can choose to share their guides with the community, such guides are publicly visible to any user of the service, as well as any non logged in users. Use this entrypoint to retrieve a list of these guides.
+
++ Response 200 (application/json)
+    + Attributes(GuideShortInfoArray)
+
+## Guides listing [/guides{?page,per_page}]
+
++ Parameters
+
+    + page: `2` (optional, integer)
+        + Default: `1`
+    + per_page: `20` (optional, integer) - Number of guides to return.
+        + Default: `10`
+
+### <i class="fa fa-key"></i> Get a list of the user guides [GET]
+Return a defined number of guides' info. The number is defined by the `per_page` arguments. User can request other pages using the `page` arguments.
+
++ Response 200 (application/json)
+    + Attributes(GuideInfoArray)
+
+
+## Guide [/guide]
+### <i class="fa fa-key"></i> Get the information for a guide [GET]
+Get the information for the given guide.
+
++ Request (application/json)
+    + Body
+
+            {
+                "guide_id": 0
+            }
+
++ Response 200 (application/json)
+    + Attributes(GuideInfo)
+
++ Response 404 (application/json)
+
+            {
+                "error": "Guide not found"
+            }
+
+### <i class="fa fa-key"></i> Create a new guide [POST]
+This entrypoint is used to create a new guide. The newly created guide will be linked to the user who created it. By default, guides visibility is set to false, and such are not publicly visible.
+
+All the guide values are empty, except the title which must be provided, and the creation and last edition date that are set to `now()`.
+
++ Request (application/json)
+    + Body
+
+            {
+                "title": "Example guide"
+            }
+
+
++ Response 201
+    + Attributes(GuideInfo)
+
+### <i class="fa fa-key"></i> Modify the guide information [PATCH]
+Modify the guide information. Every fields in the request body are **optional**, however, only the one shown in the example below will be recognized. Note that `last-edited` is updated automatically every time the guide is modified through this request or any other (adding photo, removing photo, etc.)
+
+Fields can be emptied to sending a empty string `""`, however the title cannot be emptied, and must at least contains an **alphanumerical** character. If emptied, the featured photo will revert back to the first photo in the guide.
+
+The `fetured-photo` field takes for arguments the ID of one the photos already in the guide. Failing to provide one will lead to a *400* error.
+
++ Request (application/json)
+    + Body
+
+            {
+                "guide_id": 0,
+                "guide_info": {
+                    "title": "Example guide",
+                    "featured-photo": 0,
+                    "visibility": false,
+                    "location": {
+                        "latitude": -17.685895,
+                        "longitude": -63.36914
+                    }
+                }
+            }
+
++ Response 200 (application/json)
+    + Attributes(GuideInfo)
+
++ Response 400 (application/json)
+
+            {
+                "error": "Featured image is not part of the guide"
+            }
+
++ Response 404 (application/json)
+
+            {
+                "error": "Guide not found"
+            }
+
+### <i class="fa fa-key"></i> Delete a guide [DELETE]
+Delete the given guide.
+
++ Request (application/json)
+    + Body
+
+            {
+                "guide_id": 0
+            }
+
++ Response 200
+
++ Response 404 (application/json)
+
+            {
+                "error": "Guide not found"
+            }
+
+## Guide's photos interaction [/guide/photo]
+
+### <i class="fa fa-key"></i> Get the list of photos in a guide [GET]
+This entrypoint returns the list of photos in a guide.
+
++ Request (application/json)
+    + Body
+
+            {
+                "guide_id": 0
+            }
+
++ Response 200
+    + Attributes(PhotoArray)
+
++ Response 404 (application/json)
+
+            {
+                "error": "Guide not found"
+            }
+
+### <i class="fa fa-key"></i> Remove a photo from a guide [DELETE]
+This entrypoint removes the given photo from the guide. Note that the photo is only remove from the system if all other links to it are also removed.
+
++ Request (application/json)
+    + Body
+
+            {
+                "guide_id": 0,
+                "photo_id": 0
+            }
+
++ Response 200
++ Response 404 (application/json)
+
+            {
+                "error": "Guide not found"
+            }
+
++ Response 404 (application/json)
+
+            {
+                "error": "Photo not in guide"
+            }
+
+### <i class="fa fa-key"></i> Add a photo to a guide [POST]
+This entrypoint adds a photo to the given guide.
+
+Not that the service will try to update all the fields of the photo (geo, exif, etc...). As such calling this entrypoing might take a bit of time, for user experience sake, it is recommended to call this entrypoint in async only.
+
++ Request (application/json)
+    + Body
+
+            {
+                "guide_id": 0,
+                "image": {
+                    "origin": "flickr",
+                    "id: "0123456"
+                }
+            }
+
++ Response 200
+    + Attributes(Photo)
+
++ Response 404 (application/json)
+
+            {
+                "error": "Guide not found"
+            }
+
++ Response 404 (application/json)
+
+            {
+                "error": "Photo not foundin target service"
+            }
