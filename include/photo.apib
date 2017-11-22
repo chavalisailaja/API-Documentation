@@ -1,0 +1,27 @@
+# Group Photo
+## Photo general information [/photo/{id}]
+
++ Parameters
+
+    + id: `2` (required, integer) - Internal ID of the photo
+
+
+
+## Search photos [/photo/search{?keywords,page,origin}]
+This entrypoint will call the target api search function and return its content. May return *400* in case the call to the other API failed, if so it will try to give a reason.
+
++ Parameters
+
+    + keywords: `keyword list` (required, string) - Space separated list of keywords to search
+    + page: `2` (optional, integer) - Page to retrieve from the api
+        + Default: `1`
+    + origin: `Flickr` (optional, string) - Define in which api to search
+        + Default: `Flickr`
+### Search photos in api [GET]
+
++ Response 200
++ Response 400
+
+            {
+                "error": "Flickr API returned an error"
+            }
