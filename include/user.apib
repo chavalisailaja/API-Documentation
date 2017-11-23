@@ -14,11 +14,15 @@ Answer *200* for valid tokens and *401* otherwise.
             Authorization: Basic <jwt_token>:*
 
 + Response 200
-+ Response 401 (application/json)
++ Response 401 (html/text)
 
-            {
-                "error": "Token is invalid"
-            }
+    + Headers
+
+            WWW-Authenticate: Basic realm="Authentication Required"
+
+    + Body
+
+            Unauthorized Access
 
 ### Retrieve JWT token [POST]
 
