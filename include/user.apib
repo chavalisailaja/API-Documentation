@@ -95,7 +95,6 @@ Get the information of the current user.
 
 This entrypoint only returns information about the active user, and as such returns more detailled information that are not publicly available. To get information about another user, use [this entrypoint](#user-other-users-info-get).
 
-
 + Response 200 (application/json)
     + Attributes(UserInfo)
 
@@ -118,7 +117,8 @@ Note that server side field value validation is active, sending incorrect value 
                 "fullname": "John Doe"
             }
 
-+ Response 200
++ Response 200 (application/json)
+    + Attributes(UserInfo)
 
 + Request for changing password (application/json)
     + Body
@@ -130,7 +130,8 @@ Note that server side field value validation is active, sending incorrect value 
                 }
             }
 
-+ Response 200
++ Response 200 (application/json)
+    + Attributes(UserInfo)
 + Response 400 (application/json)
 
             {
@@ -144,7 +145,8 @@ Note that server side field value validation is active, sending incorrect value 
                 "email": "johndoe@foo.bar"
             }
 
-+ Response 200
++ Response 200 (application/json)
+    + Attributes(UserInfo)
 + Response 400 (application/json)
 
             {
