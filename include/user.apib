@@ -1,0 +1,190 @@
+
+# Group User
+
+## User Authentication [/user/auth]
+### <i class="fa fa-key"></i> Validate JWT token [GET]
+
+Used to validate a JWT token, useful to quickly check if it's expired.
+
+Answer *200* for valid tokens and *401* otherwise.
+
++ Request
+    + Headers
+
+            Authorization: Basic <jwt_token>:*
+
++ Response 200
++ Response 401 (html/text)
+
+    + Headers
+
+            WWW-Authenticate: Basic realm="Authentication Required"
+
+    + Body
+
+            Unauthorized Access
+
+### Retrieve JWT token [POST]
+
+Generate a jwt token for the user if both username and password are valid. JWT token will be used for all further authenticated interactions with the API.
+
+If both password and username are valid, the API will answer by a *200* and return the JWT token in the body, otherwise the API will answer a *401*. Note that it will also answer *401* in case of missing authentication information.
+
+
++ Request
+    + Headers
+
+            Authorization: Basic <username>:<password>
+
++ Response 200 (application/json)
+
+            {
+                "token": "jwt_token"
+            }
++ Response 401 (html/text)
+
+    + Headers
+
+            WWW-Authenticate: Basic realm="Authentication Required"
+
+    + Body
+
+            Unauthorized Access
+
+## User administration [/user]
+### Create a new user [POST]
+::: note
+#### <i class="fa fa-key"></i> This entrypoint does not require authentication
+:::
+Create a new user for the service.
+
+During the beta phase an access **code must be provided** in order to create an account. Codes are given by administrators of the service.
+
++ Request (application/json)
+    + Body
+
+            {
+                "username": "johndoe",
+                "email": "johndoe@foo.bar",
+                "password": "123456",
+                "code": "abcdef"
+            }
+
++ Response 201
++ Response 400
+
+            {
+                "error": "Code is invalid"
+            }
+
++ Response 409
+
+            {
+                "error": "Username already in use"
+            }
+
+### <i class="fa fa-key"></i> Delete the user account [DELETE]
+Delete the account of the user.
+
++ Response 200
+
+## User Info [/user/info]
+### <i class="fa fa-key"></i> Get user information [GET]
+
+Get the information of the current user.
+
+This entrypoint only returns information about the active user, and as such returns more detailled information that are not publicly available. To get information about another user, use [this entrypoint](#user-other-users-info-get).
+
++ Response 200 (application/json)
+    + Attributes(UserInfo)
+
+### <i class="fa fa-key"></i> Modify user data [PATCH]
+Modify the user information.
+
+Fields that can be modified through this entrypoint are defined below. Fields in bold accepts empty string (`""`) in order to empty them. Trying to empty a mandatory field will result in a *400* error:
+ * **fullname**
+ * password
+ * email
+
+In case password is modified, previous password needs to be sent along the new one.
+
+Note that server side field value validation is active, sending incorrect value will result in *400* error.
+
++ Request (application/json)
+    + Body
+
+            {
+                "fullname": "John Doe"
+            }
+
++ Response 200 (application/json)
+    + Attributes(UserInfo)
+
++ Request for changing password (application/json)
+    + Body
+
+            {
+                "password": {
+                    "new": "abcxyz",
+                    "old": "123456"
+                }
+            }
+
++ Response 200 (application/json)
+    + Attributes(UserInfo)
++ Response 400 (application/json)
+
+            {
+                "error": "Old password invalid"
+            }
+
++ Request for changing email (application/json)
+    + Body
+
+            {
+                "email": "johndoe@foo.bar"
+            }
+
++ Response 200 (application/json)
+    + Attributes(UserInfo)
++ Response 400 (application/json)
+
+            {
+                "error": "Email format is invalid"
+            }
+
++ Request for emptying a mandatory field (application/json)
+    + Body
+
+            {
+                "email": ""
+            }
+
++ Response 400 (application/json)
+
+            {
+                "error": "Mandatory fields cannot be empty"
+            }
+
+
+## Other users info [/user/info/{username}]
+
++ Parameters
+
+    + username: `johndoe` (required, string)
+
+### <i class="fa fa-key"></i> Get another user information [GET]
+
+Get information about other users using the service.
+
+Use this entrypoint to get information about other users of the service, information about the active user should be obtained using [this entrypoint](#user-user-info-get). This entrypoint only returns information that are publicly available.
+
++ Response 200 (application/json)
+    + Attributes(UserShort)
+
+
++ Response 404 (application/json)
+
+            {
+                "error": "No user found"
+            }

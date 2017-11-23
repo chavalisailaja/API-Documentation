@@ -1,0 +1,31 @@
+# Group Photo
+
+## Search photos [/photo/search]
+
+### <i class="fa fa-key"></i> Search photos in api [GET]
+This entrypoint will call the target api search function and return its content. May return *400* in case the call to the other API failed, if so it will try to give a reason.
+
+The `keywords`body field is mandatory, and all the others are optionnal.
+
+The response body is a passthrough of the result of the other API ([Flickr](https://www.flickr.com/services/api/flickr.photos.search.html)).
+
+
++ Request (application/json)
+    + Body
+
+            {
+                "keywords": 0,
+                "page": 0,
+                "per_page": 20
+            }
+
++ Response 200 (application/json)
+
+            {
+            }
+
++ Response 400
+
+            {
+                "error": "External API returned an error"
+            }

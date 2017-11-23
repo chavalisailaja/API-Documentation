@@ -1,0 +1,9 @@
+{
+  "name": "photoscout-api-documentation",
+  "version": "1.0.0",
+  "description": "API blueprint documentation of PhotoScout API",
+  "dependencies": {
+    "aglio": "^2.3.0"
+  },
+  "devDependencies": {}
+}

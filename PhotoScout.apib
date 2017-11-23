@@ -1,0 +1,25 @@
+FORMAT: 1A
+HOST: https://murmuring-fjord-85655.herokuapp.com/api/v1
+
+# PhotoScout
+API behind the PhotoScout service. PhotoScout allows you to quickly and effortlessly prepare your photoshoots. Get insipiration, plan, prepare, and spend more time on the fields and less behind the screen.
+
+::: warning
+#### <i class="fa fa-warning"></i> API authenticated access
+**All API entrypoints**, unless specified otherwise, are **expecting an authentication header** containing an active JWT token.
+
+The header is expected to be in the following format:
+```http
+Authorization: Basic <jwt_token>:*
+```
+:::
+
+<!-- include(include/data_structures.apib) -->
+
+<!-- include(include/user.apib) -->
+
+<!-- include(include/guide.apib) -->
+
+<!-- include(include/photo.apib) -->
+
+<!-- include(include/weather.apib) -->
