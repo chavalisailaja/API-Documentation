@@ -124,8 +124,10 @@ Note that server side field value validation is active, sending incorrect value 
     + Body
 
             {
-                "password": "abcxyz",
-                "oldpass": "123456"
+                "password": {
+                    "new": "abcxyz",
+                    "old": "123456"
+                }
             }
 
 + Response 200
