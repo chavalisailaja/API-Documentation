@@ -61,6 +61,8 @@ This entrypoint is used to create a new guide. The newly created guide will be l
 
 All the guide values are empty, except the title which must be provided, and the creation and last edition date that are set to `now()`.
 
+The `title` field cannot be empty. Space only strings will also be rejected.
+
 + Request (application/json)
     + Body
 
@@ -78,6 +80,8 @@ Modify the guide information. Every fields in the request body are **optional**,
 Fields can be emptied to sending a empty string `""`, however the title cannot be emptied, and must at least contains an **alphanumerical** character. If emptied, the featured photo will revert back to the first photo in the guide.
 
 The `fetured-photo` field takes for arguments the ID of one the photos already in the guide. Failing to provide one will lead to a *400* error.
+
+The `title` field cannot be emptied. Space only strings will also be rejected.
 
 + Request (application/json)
     + Body
